@@ -50,7 +50,7 @@ exports.signUp=async (req, res) => {
             }
         );
         res.cookie("authcookie",token,{httpOnly:true,maxAge:2147483647});
-        res.status(200).json({message:"successful signup"});
+        res.status(200).json(user);
     } catch (err) {
         console.log(err.message);
         res.status(500).send("Error in Saving");
@@ -97,7 +97,7 @@ exports.login=async (req, res) => {
         (err, token) => {
           if (err) throw err;
           res.cookie('authcookie',token,{maxAge:2147483647,httpOnly:true});
-          res.status(200).json({message:"successful login"})
+          res.status(200).json(user);
         }
       );
     } catch (e) {
@@ -111,7 +111,7 @@ exports.login=async (req, res) => {
   exports.getUser=async (req, res) => {
     try {
       // request.user is getting fetched from Middleware after token authentication
-      const user = await User.findById(req.user.id);
+      const user = await User.findById(req.user.id).select("-password");
       res.json(user);
     } catch (e) {
       res.send({ message: "Error in Fetching user" });
