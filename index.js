@@ -12,7 +12,7 @@ app.use(cors({credentials: true, origin: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-const port=process.env.port || 5000;
+const port=process.env.PORT || 5000;
 const uri=`${process.env.MONGODB_CONNECTION_STRING}`;
 mongoose.connect(uri,{useUnifiedTopology:true,useNewUrlParser: true,});
 const connection=mongoose.connection;
